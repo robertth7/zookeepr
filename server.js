@@ -3,7 +3,7 @@ const path = require('path');
 const express = require('express');
 const { animals } = require('./data/animals.json');
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.NODE_ENV || 3001;
 const app = express();
 // setting up the server only takes two steps: we need to instantiate the server, then tell it to listen for requests. 
 // To instantiate the server, we added the const app = express();
