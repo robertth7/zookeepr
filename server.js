@@ -14,6 +14,13 @@ app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
 
+// adding middleware CSS & JavaScript below
+// This middleware will help create a virtual path between the location of the file based on the 
+// directory given and the route itself.
+app.use(express.static('public'));
+// so whenever serving static pages with Express, the static middleware needs
+// to be used for the pages to lead their corresponding resources properly.
+
 // function filterByQuery will take in 'req.query' as an argument and filter through the animals accordingly, returning the new filtered array. so we have to call it from app.get().
 function filterByQuery(query, animalsArray) {
     let personalityTraitsArray = [];
@@ -131,6 +138,27 @@ app.post('/api/animals', (req, res) => {
     // console.log(req.body);
     // res.json(req.body);
 });
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
+// Where do you think the '/' route points us to?
+// It brings us to the root route fo the server!
+// This is the route used to create a homepage for a server.
+
+app.get('/animals', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+app.get('/zookeepers', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
+
+// Wildcard Routes
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
 });
